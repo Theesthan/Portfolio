@@ -8,6 +8,7 @@ import { InterestTags } from "@/components/ui/InterestTags";
 import { useSectionScroll } from "@/hooks/useSectionScroll";
 import { useCursorPosition } from "@/hooks/useCursorPosition";
 import { ExperienceCard } from "@/components/ui/ExperienceCard";
+import { ProjectDetailModal } from "@/components/ui/ProjectDetailModal";
 
 /**
  * Dynamic import of Scene to prevent SSR of Three.js/Canvas.
@@ -80,6 +81,15 @@ const ExperienceNode = dynamic(
   { ssr: false }
 );
 
+/* Phase 7: Project carousel */
+const ProjectCards = dynamic(
+  () =>
+    import("@/components/canvas/ProjectCards").then((mod) => ({
+      default: mod.ProjectCards,
+    })),
+  { ssr: false }
+);
+
 export default function Home() {
   // Phase 3: Wheel scroll section navigation
   useSectionScroll();
@@ -100,6 +110,8 @@ export default function Home() {
         <CameraRig />
         {/* Phase 6: Experience 3D orb */}
         <ExperienceNode />
+        {/* Phase 7: Project carousel */}
+        <ProjectCards />
       </Scene>
 
       {/* DOM overlays — layered above the canvas */}
@@ -113,6 +125,9 @@ export default function Home() {
         {/* Phase 6: Experience card overlay */}
         <ExperienceCard />
       </div>
+
+      {/* Phase 7: Project detail modal */}
+      <ProjectDetailModal />
 
       {/* Phase 4: Custom cursor */}
       <Cursor />
