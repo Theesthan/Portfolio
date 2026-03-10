@@ -7,6 +7,7 @@ import { HeroText } from "@/components/ui/HeroText";
 import { InterestTags } from "@/components/ui/InterestTags";
 import { useSectionScroll } from "@/hooks/useSectionScroll";
 import { useCursorPosition } from "@/hooks/useCursorPosition";
+import { ExperienceCard } from "@/components/ui/ExperienceCard";
 
 /**
  * Dynamic import of Scene to prevent SSR of Three.js/Canvas.
@@ -70,6 +71,15 @@ const CameraRig = dynamic(
   { ssr: false }
 );
 
+/* Phase 6: Experience 3D orb */
+const ExperienceNode = dynamic(
+  () =>
+    import("@/components/canvas/ExperienceNode").then((mod) => ({
+      default: mod.ExperienceNode,
+    })),
+  { ssr: false }
+);
+
 export default function Home() {
   // Phase 3: Wheel scroll section navigation
   useSectionScroll();
@@ -88,6 +98,8 @@ export default function Home() {
         <ParticleField />
         {/* Phase 3: Camera navigation */}
         <CameraRig />
+        {/* Phase 6: Experience 3D orb */}
+        <ExperienceNode />
       </Scene>
 
       {/* DOM overlays — layered above the canvas */}
@@ -98,6 +110,8 @@ export default function Home() {
         </div>
         {/* Phase 5: Interest tags with proximity repulsion */}
         <InterestTags />
+        {/* Phase 6: Experience card overlay */}
+        <ExperienceCard />
       </div>
 
       {/* Phase 4: Custom cursor */}

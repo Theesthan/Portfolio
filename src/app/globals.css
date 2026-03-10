@@ -128,3 +128,97 @@ body.custom-cursor-active [data-cursor="hover"] {
       2px 0 rgba(0, 200, 255, 0.6);
   }
 }
+
+/* ─── Phase 6: Experience Card ─── */
+
+/* Glassmorphism card with animated conic-gradient border */
+.experience-card {
+  position: relative;
+  background: rgba(10, 0, 18, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(176, 109, 255, 0.15);
+  min-width: 380px;
+}
+
+/* Animated rotating conic-gradient pseudo-border */
+.experience-border-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    transparent 30%,
+    rgba(176, 109, 255, 0.6) 50%,
+    transparent 70%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rotate-border 4s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes rotate-border {
+  to {
+    --border-angle: 360deg;
+  }
+}
+
+/* Blinking cursor after date */
+.blink-cursor {
+  display: inline-block;
+  animation: blink 1s step-end infinite;
+  color: var(--color-accent);
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Stack technology pills */
+.stack-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: rgba(176, 109, 255, 0.12);
+  border: 1px solid rgba(176, 109, 255, 0.25);
+  color: var(--color-lavender);
+  font-family: var(--font-display);
+}
+
+/* Timeline dot */
+.experience-timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  box-shadow: 0 0 12px rgba(176, 109, 255, 0.6);
+  flex-shrink: 0;
+}
+
+/* Timeline vertical line */
+.experience-timeline-line {
+  width: 2px;
+  flex: 1;
+  background: linear-gradient(
+    to bottom,
+    var(--color-accent),
+    rgba(176, 109, 255, 0.1)
+  );
+  border-radius: 1px;
+  margin-top: 6px;
+}
