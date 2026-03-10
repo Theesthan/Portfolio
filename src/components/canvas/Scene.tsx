@@ -57,12 +57,9 @@ export function Scene({ children }: SceneProps) {
       <color attach="background" args={["#0a0012"]} />
       <fogExp2 attach="fog" args={["#1a0035", 0.035]} />
 
-      {/* HDRI environment for global illumination (loads async) */}
+      {/* HDRI environment for global illumination (drei preset — no file needed) */}
       <Suspense fallback={null}>
-        <Environment
-          files="/assets/hdri/cloudy_sky.hdr"
-          background={false}
-        />
+        <Environment preset="night" background={false} />
       </Suspense>
 
       {/* Lighting */}

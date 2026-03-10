@@ -1,12 +1,8 @@
 "use client";
 
-import { Suspense, useRef } from "react";
-import { useGLTF } from "@react-three/drei";
-import type { Group } from "three";
-
 /**
- * Procedural mountain fallback — cone-based silhouettes.
- * Used when GLTF models are not yet available.
+ * Procedural mountain silhouette — cone-based geometry.
+ * No external GLTF models required.
  */
 function ProceduralMountain({
   position,
@@ -31,70 +27,19 @@ function ProceduralMountain({
 }
 
 /**
- * GLTF-based mountain loader with procedural fallback.
- * Attempts to load mountain.glb; if absent, renders cone geometry.
- */
-function MountainModel({
-  position,
-  scale,
-  rotation = 0,
-}: {
-  position: [number, number, number];
-  scale: [number, number, number];
-  rotation?: number;
-}) {
-  const groupRef = useRef<Group>(null);
-
-  try {
-    const { scene } = useGLTF("/assets/models/mountain.glb");
-
-    return (
-      <group ref={groupRef} position={position} rotation={[0, rotation, 0]}>
-        <primitive
-          object={scene.clone()}
-          scale={scale}
-          castShadow
-          receiveShadow
-        />
-      </group>
-    );
-  } catch {
-    // GLTF not available — use procedural fallback
-    return (
-      <ProceduralMountain
-        position={position}
-        scale={scale}
-        rotation={rotation}
-      />
-    );
-  }
-}
-
-/**
- * Mountains — 2 stylized mountain silhouettes in the background.
- * Positioned to create depth against the foggy purple sky.
+ * Mountains — Stylized mountain silhouettes in the background.
+ * Procedural cone geometry positioned to create depth against the foggy purple sky.
  */
 export function Mountains() {
   return (
-    <Suspense
-      fallback={
-        <>
-          <ProceduralMountain
-            position={[-4, -0.5, -10]}
-            scale={[3, 6, 3]}
-          />
-          <ProceduralMountain
-            position={[3, -0.5, -12]}
-            scale={[2, 4.5, 2]}
-            rotation={0.4}
-          />
-        </>
-      }
-    >
-      <MountainModel position={[-4, -0.5, -10]} scale={[3, 4, 3]} />
-      <MountainModel
+    <>
+      <ProceduralMountain
+        position={[-4, -0.5, -10]}
+        scale={[3, 6, 3]}
+      />
+      <ProceduralMountain
         position={[3, -0.5, -12]}
-        scale={[2, 3, 2]}
+        scale={[2, 4.5, 2]}
         rotation={0.4}
       />
       {/* Smaller background mountain for additional depth */}
@@ -103,6 +48,6 @@ export function Mountains() {
         scale={[2.5, 5, 2.5]}
         rotation={-0.3}
       />
-    </Suspense>
+    </>
   );
 }
