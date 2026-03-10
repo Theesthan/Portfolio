@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { NavDots } from "@/components/ui/NavDots";
 import { Cursor } from "@/components/ui/Cursor";
 import { HeroText } from "@/components/ui/HeroText";
+import { InterestTags } from "@/components/ui/InterestTags";
 import { useSectionScroll } from "@/hooks/useSectionScroll";
 import { useCursorPosition } from "@/hooks/useCursorPosition";
 
@@ -95,6 +96,8 @@ export default function Home() {
         <div className="flex h-full w-full items-center justify-center">
           <HeroText />
         </div>
+        {/* Phase 5: Interest tags with proximity repulsion */}
+        <InterestTags />
       </div>
 
       {/* Phase 4: Custom cursor */}
