@@ -9,6 +9,7 @@ import { useSectionScroll } from "@/hooks/useSectionScroll";
 import { useCursorPosition } from "@/hooks/useCursorPosition";
 import { ExperienceCard } from "@/components/ui/ExperienceCard";
 import { ProjectDetailModal } from "@/components/ui/ProjectDetailModal";
+import { LoadingScreen } from "@/components/ui/LoadingScreen";
 
 /**
  * Dynamic import of Scene to prevent SSR of Three.js/Canvas.
@@ -107,23 +108,28 @@ export default function Home() {
 
   return (
     <main className="relative h-screen w-screen overflow-hidden bg-portfolio-bg">
-      {/* WebGL Canvas — full-screen, fixed behind DOM overlays */}
-      <Scene>
-        {/* Phase 2: 3D Environment */}
-        <Terrain />
-        <Mountains />
-        <CatModel />
-        <VolumetricClouds />
-        <ParticleField />
-        {/* Phase 3: Camera navigation */}
-        <CameraRig />
-        {/* Phase 6: Experience 3D orb */}
-        <ExperienceNode />
-        {/* Phase 7: Project carousel */}
-        <ProjectCards />
-        {/* Phase 8: Post-processing pipeline */}
-        <PostProcessing />
-      </Scene>
+      {/* Phase 9: Cinematic loading screen */}
+      <LoadingScreen />
+
+      {/* WebGL Canvas — starts hidden, faded in by load timeline */}
+      <div className="canvas-wrapper" style={{ opacity: 0 }}>
+        <Scene>
+          {/* Phase 2: 3D Environment */}
+          <Terrain />
+          <Mountains />
+          <CatModel />
+          <VolumetricClouds />
+          <ParticleField />
+          {/* Phase 3: Camera navigation */}
+          <CameraRig />
+          {/* Phase 6: Experience 3D orb */}
+          <ExperienceNode />
+          {/* Phase 7: Project carousel */}
+          <ProjectCards />
+          {/* Phase 8: Post-processing pipeline */}
+          <PostProcessing />
+        </Scene>
+      </div>
 
       {/* DOM overlays — layered above the canvas */}
       <div className="pointer-events-none fixed inset-0 z-10">
