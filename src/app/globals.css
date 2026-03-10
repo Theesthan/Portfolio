@@ -107,7 +107,8 @@ body.custom-cursor-active [data-cursor="hover"] {
 }
 
 /* ─── Chromatic Aberration Shimmer (for subtitle) ─── */
-.chromatic-shimmer {
+.chromatic-shimmer,
+.subtitle-text {
   text-shadow:
     -1px 0 rgba(255, 0, 100, 0.4),
     1px 0 rgba(0, 200, 255, 0.4);

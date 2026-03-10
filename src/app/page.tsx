@@ -2,7 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { NavDots } from "@/components/ui/NavDots";
+import { Cursor } from "@/components/ui/Cursor";
+import { HeroText } from "@/components/ui/HeroText";
 import { useSectionScroll } from "@/hooks/useSectionScroll";
+import { useCursorPosition } from "@/hooks/useCursorPosition";
 
 /**
  * Dynamic import of Scene to prevent SSR of Three.js/Canvas.
@@ -69,6 +72,8 @@ const CameraRig = dynamic(
 export default function Home() {
   // Phase 3: Wheel scroll section navigation
   useSectionScroll();
+  // Phase 4: Track cursor position in NDC for 3D/UI effects
+  useCursorPosition();
 
   return (
     <main className="relative h-screen w-screen overflow-hidden bg-portfolio-bg">
@@ -86,13 +91,14 @@ export default function Home() {
 
       {/* DOM overlays — layered above the canvas */}
       <div className="pointer-events-none fixed inset-0 z-10">
-        {/* Phase 4+: HeroText, Cursor, etc. */}
+        {/* Phase 4: Hero section UI */}
         <div className="flex h-full w-full items-center justify-center">
-          <h1 className="pointer-events-auto font-coolvetica text-6xl tracking-widest text-portfolio-accent drop-shadow-[0_0_30px_rgba(176,109,255,0.5)]">
-            S THEESTHAN
-          </h1>
+          <HeroText />
         </div>
       </div>
+
+      {/* Phase 4: Custom cursor */}
+      <Cursor />
 
       {/* Phase 3: Navigation dots */}
       <NavDots />
