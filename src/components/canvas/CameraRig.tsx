@@ -23,6 +23,9 @@ export function CameraRig() {
   const tweensRef = useRef<gsap.core.Tween[]>([]);
   const activeSection = usePortfolioStore((s) => s.activeSection);
   const reducedMotion = usePortfolioStore((s) => s.reducedMotion);
+  const setCameraTransitioning = usePortfolioStore(
+    (s) => s.setCameraTransitioning
+  );
 
   // Initialize camera to hero anchor on mount
   useEffect(() => {
@@ -42,6 +45,9 @@ export function CameraRig() {
 
     const duration = reducedMotion ? 0.3 : anchor.duration;
     const ease = reducedMotion ? "power1.out" : anchor.ease;
+
+    // Signal post-processing to spike chromatic aberration
+    setCameraTransitioning(true);
 
     // Proxy objects for GSAP to tween (can't tween Vector3 directly)
     const posProxy = {
@@ -64,6 +70,9 @@ export function CameraRig() {
       onUpdate: () => {
         camera.position.set(posProxy.x, posProxy.y, posProxy.z);
       },
+      onComplete: () => {
+        setCameraTransitioning(false);
+      },
     });
 
     const targetTween = gsap.to(targetProxy, {
@@ -84,7 +93,7 @@ export function CameraRig() {
       posTween.kill();
       targetTween.kill();
     };
-  }, [activeSection, camera, reducedMotion]);
+  }, [activeSection, camera, reducedMotion, setCameraTransitioning]);
 
   // Subtle idle float — gentle sine wave on Y axis
   useFrame(({ clock }) => {

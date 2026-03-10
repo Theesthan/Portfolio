@@ -42,6 +42,10 @@ interface PortfolioState {
   setLoadingScreenVisible: (visible: boolean) => void;
   reducedMotion: boolean;
   setReducedMotion: (reduced: boolean) => void;
+
+  /* ── Post-Processing ── */
+  cameraTransitioning: boolean;
+  setCameraTransitioning: (transitioning: boolean) => void;
 }
 
 export const usePortfolioStore = create<PortfolioState>((set) => ({
@@ -77,4 +81,9 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
     set({ loadingScreenVisible: visible }),
   reducedMotion: false,
   setReducedMotion: (reduced) => set({ reducedMotion: reduced }),
+
+  /* ── Post-Processing ── */
+  cameraTransitioning: false,
+  setCameraTransitioning: (transitioning) =>
+    set({ cameraTransitioning: transitioning }),
 }));

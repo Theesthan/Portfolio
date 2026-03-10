@@ -90,6 +90,15 @@ const ProjectCards = dynamic(
   { ssr: false }
 );
 
+/* Phase 8: Post-processing pipeline */
+const PostProcessing = dynamic(
+  () =>
+    import("@/components/canvas/PostProcessing").then((mod) => ({
+      default: mod.PostProcessing,
+    })),
+  { ssr: false }
+);
+
 export default function Home() {
   // Phase 3: Wheel scroll section navigation
   useSectionScroll();
@@ -112,6 +121,8 @@ export default function Home() {
         <ExperienceNode />
         {/* Phase 7: Project carousel */}
         <ProjectCards />
+        {/* Phase 8: Post-processing pipeline */}
+        <PostProcessing />
       </Scene>
 
       {/* DOM overlays — layered above the canvas */}
