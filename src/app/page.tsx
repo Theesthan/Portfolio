@@ -10,6 +10,8 @@ import { useCursorPosition } from "@/hooks/useCursorPosition";
 import { ExperienceCard } from "@/components/ui/ExperienceCard";
 import { ProjectDetailModal } from "@/components/ui/ProjectDetailModal";
 import { LoadingScreen } from "@/components/ui/LoadingScreen";
+import { MobileFallback } from "@/components/ui/MobileFallback";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 /**
  * Dynamic import of Scene to prevent SSR of Three.js/Canvas.
@@ -106,8 +108,23 @@ export default function Home() {
   // Phase 4: Track cursor position in NDC for 3D/UI effects
   useCursorPosition();
 
+  // Phase 10: Mobile / low-capability device detection
+  const isMobile = useIsMobile();
+
+  // Mobile: simplified Framer Motion fallback (no WebGL)
+  if (isMobile) {
+    return <MobileFallback />;
+  }
+
   return (
-    <main className="relative h-screen w-screen overflow-hidden bg-portfolio-bg">
+    <main
+      className="relative h-screen w-screen overflow-hidden bg-portfolio-bg"
+      role="main"
+      aria-label="S Theesthan Portfolio"
+    >
+      {/* Scanline overlay — subtle CRT effect */}
+      <div className="scanline-overlay" aria-hidden="true" />
+
       {/* Phase 9: Cinematic loading screen */}
       <LoadingScreen />
 

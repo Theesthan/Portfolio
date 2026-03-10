@@ -62,6 +62,9 @@ export function ProjectDetailModal() {
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="pointer-events-auto fixed inset-0 z-50 m-auto flex h-fit max-h-[80vh] w-full max-w-lg flex-col overflow-y-auto rounded-2xl border border-white/10 p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Project details: ${project.name}`}
             style={{
               background: "rgba(10, 0, 18, 0.92)",
               backdropFilter: "blur(24px)",
